@@ -6,3 +6,6 @@ function randomInteger(min, max) {
 function maxStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
+
+randomInteger(5, 15);
+maxStringLength('qwerty', 7);
