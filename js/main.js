@@ -65,7 +65,7 @@ const generateComments = (numberOfComments) => {
 const generatePosts = (numberOfPosts) => {
   const posts = [];
 
-  for (let i = 1; i <= numberOfPosts; i++) {
+  for (let i = 0; i < numberOfPosts; i++) {
     posts.push(
       {
         id: i,
