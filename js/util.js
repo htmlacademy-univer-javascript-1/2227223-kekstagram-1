@@ -9,11 +9,11 @@ function maxStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
-const getNewID = () => {
-  let tempID = randomInteger(0, 499);
+const getNewID = (min, max) => {
+  let tempID = randomInteger(min, max);
 
-  while(usedID.includes(tempID)) {
-    tempID = randomInteger(0, 499);
+  while (usedID.includes(tempID)) {
+    tempID = randomInteger(min, max);
   }
   usedID.push(tempID);
 
@@ -26,7 +26,7 @@ const generateComments = (numberOfComments) => {
   for (let i = 0; i < numberOfComments; i++) {
     comments.push(
       {
-        id: getNewID(),
+        id: getNewID(0, 999),
         avatar: `img/avatar-${randomInteger(1, 6)}.svg`,
         message: MESSAGES[randomInteger(0, MESSAGES.length - 1)],
         name: NAMES[randomInteger(0, NAMES.length - 1)]
