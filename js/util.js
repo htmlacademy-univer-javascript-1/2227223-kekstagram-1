@@ -1,4 +1,4 @@
-import {NAMES, DESCRIPTIONS, MESSAGES, usedID} from './data';
+import {NAMES, DESCRIPTIONS, MESSAGES} from './data';
 
 function randomInteger(min, max) {
   const res = min + Math.random() * (max - min + 1);
@@ -9,16 +9,9 @@ function maxStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
-const getNewID = (min, max) => {
-  let tempID = randomInteger(min, max);
-
-  while (usedID.includes(tempID)) {
-    tempID = randomInteger(min, max);
-  }
-  usedID.push(tempID);
-
-  return tempID;
-};
+function getNewID() {
+  return randomInteger(0, 10000000);
+}
 
 const generateComments = (numberOfComments) => {
   const comments = [];
@@ -26,7 +19,7 @@ const generateComments = (numberOfComments) => {
   for (let i = 0; i < numberOfComments; i++) {
     comments.push(
       {
-        id: getNewID(0, 999),
+        id: getNewID(),
         avatar: `img/avatar-${randomInteger(1, 6)}.svg`,
         message: MESSAGES[randomInteger(0, MESSAGES.length - 1)],
         name: NAMES[randomInteger(0, NAMES.length - 1)]
