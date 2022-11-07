@@ -1,5 +1,5 @@
-import {generatePosts} from './util';
-import {renderBigPicture} from './fullsizeMode';
+import {generatePosts} from './util.js';
+import {renderBigPicture} from './fullsizeMode.js';
 
 const template = document.querySelector('#picture').content;
 const newTemplate = template.querySelector('.picture');
