@@ -1,17 +1,13 @@
 import {NAMES, DESCRIPTIONS, MESSAGES} from './data.js';
 
-function randomInteger(min, max) {
+const randomInteger = (min, max) => {
   const res = min + Math.random() * (max - min + 1);
   return Math.floor(res);
-}
+};
 
-function maxStringLength(str, maxLength) {
-  return str.length <= maxLength;
-}
+const maxStringLength = (str, maxLength) => str.length <= maxLength;
 
-function getNewID() {
-  return randomInteger(0, 10000000);
-}
+const getNewID = () => randomInteger(0, 10000000);
 
 const generateComments = (numberOfComments) => {
   const comments = [];
@@ -40,7 +36,7 @@ const generatePosts = (numberOfPosts) => {
         url: `photos/${i}.jpg`,
         description: DESCRIPTIONS[randomInteger(0, DESCRIPTIONS.length - 1)],
         likes: randomInteger(15, 200),
-        comments: generateComments(5)
+        comments: generateComments(randomInteger(1, 25))
       }
     );
   }
