@@ -53,6 +53,7 @@ const renderComment = ({avatar, message, name}) => {
 };
 
 const renderComments = (comments) => {
+  deleteOldCmts();
   comments.forEach((comment) => {
     renderComment(comment);
   });
@@ -73,5 +74,12 @@ const renderBigPicture = ({url, likes, comments, description}) => {
 
   buttonClose();
 };
+
+function deleteOldCmts() {
+  const arrOfCom = document.querySelectorAll('.social__comment');
+  for (let i = 0; i < arrOfCom.length; i++) {
+    document.querySelector('.social__comment').remove();
+  }
+}
 
 export {renderBigPicture};
