@@ -1,16 +1,18 @@
 const bigPicture = document.querySelector('.big-picture');
-const socCmtCount = document.querySelector('.social__comment-count');
-const cmtLoader = document.querySelector('.comments-loader');
+const cmtLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 const cmtWidth = 35;
 const cmtHeight = 35;
 
+let allCmts = 0;
+let allCmtsCount = 0;
+let currCmtsCount = 0;
+
 const closeOption = () => {
   bigPicture.classList.add('hidden');
-  socCmtCount.classList.remove('hidden');
   cmtLoader.classList.remove('hidden');
   body.classList.remove('modal-open');
-  bigPicture.querySelector('.social__comments').replaceChildren();
+  currCmtsCount = 0;
 };
 
 const escClose = (keyEvent) => {
@@ -22,7 +24,7 @@ const escClose = (keyEvent) => {
 
 const buttonClose = () => {
   document.addEventListener('keydown', escClose);
-  document.querySelector('.big-picture__cancel').addEventListener('click', () => {
+  bigPicture.querySelector('.big-picture__cancel').addEventListener('click', () => {
     closeOption();
     document.removeEventListener('keydown', escClose);
   });
@@ -50,26 +52,44 @@ const renderComments = (comments) => {
     fragment.querySelector('li').append(tempImg);
     fragment.querySelector('li').append(tempP);
 
+    currCmtsCount++;
+
     bigPicture.querySelector('.social__comments').append(fragment);
   });
+  document.querySelector('.current-comments-count').textContent = currCmtsCount;
+  if (currCmtsCount === allCmtsCount) {
+    cmtLoader.classList.add('hidden');
+  }
 };
 
-const createComments = (comments) => {
+const renderFiveCmts = () => {
+  renderComments(allCmts.slice(currCmtsCount, currCmtsCount + 5));
+};
+
+const loadFiveCmts = (evt) => {
+  evt.preventDefault();
+  renderFiveCmts();
+};
+
+const createComments = () => {
   deleteOldCmts();
-  renderComments(comments);
+
+  renderFiveCmts();
+  cmtLoader.addEventListener('click', loadFiveCmts);
 };
 
 const renderBigPicture = ({url, likes, comments, description}) => {
+  allCmts = comments;
+  allCmtsCount = comments.length;
+
   document.querySelector('.big-picture__img').querySelector('img').src = url;
   document.querySelector('.likes-count').textContent = likes;
-  document.querySelector('.comments-count').textContent = comments.length;
+  document.querySelector('.comments-count').textContent = allCmtsCount;
   document.querySelector('.social__caption').textContent = description;
 
-  createComments(comments);
+  createComments();
 
   bigPicture.classList.remove('hidden');
-  socCmtCount.classList.add('hidden');
-  cmtLoader.classList.add('hidden');
   body.classList.add('modal-open');
 
   buttonClose();

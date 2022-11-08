@@ -40,7 +40,7 @@ const generatePosts = (numberOfPosts) => {
         url: `photos/${i}.jpg`,
         description: DESCRIPTIONS[randomInteger(0, DESCRIPTIONS.length - 1)],
         likes: randomInteger(15, 200),
-        comments: generateComments(5)
+        comments: generateComments(randomInteger(1, 25))
       }
     );
   }
