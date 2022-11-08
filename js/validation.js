@@ -16,13 +16,13 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__error'
 });
 
-function onFocusIgnoreEsc(evt) {
-  if (evt.keyCode === 27) {
-    evt.stopPropagation();
+const onFocusIgnoreEsc = (keyEvent) => {
+  if (keyEvent.keyCode === 27) {
+    keyEvent.stopPropagation();
   }
-}
+};
 
-function hashtagsHandler(value) {
+const hashtagsHandler = (value) => {
   value = value.toLowerCase().trim();
   if (!value) {
     return true;
@@ -38,11 +38,9 @@ function hashtagsHandler(value) {
   }
 
   return hashtags.length <= MAX_HASHTAGS_COUNT && hashtags.length === uniqHashtags.length;
-}
+};
 
-function commentHandler(value) {
-  return value.length <= MAX_COMMENT_LENGTH;
-}
+const commentHandler = (value) => value.length <= MAX_COMMENT_LENGTH;
 
 pristine.addValidator(inputHashtag, hashtagsHandler, 'Неккоректный ввод хэш-тегов');
 

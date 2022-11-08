@@ -1,8 +1,7 @@
+const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const cmtLoader = bigPicture.querySelector('.comments-loader');
-const body = document.querySelector('body');
-const cmtWidth = 35;
-const cmtHeight = 35;
+const cmtTemplate = bigPicture.querySelector('.social__comment');
 
 let allCmts = 0;
 let allCmtsCount = 0;
@@ -32,29 +31,17 @@ const buttonClose = () => {
 
 const renderComments = (comments) => {
   comments.forEach((comment) => {
-    const fragment = document.createDocumentFragment();
-    const tempLi = document.createElement('li');
-    const tempImg = document.createElement('img');
-    const tempP = document.createElement('p');
+    const newCmt = cmtTemplate.cloneNode(true);
 
-    tempLi.classList.add('social__comment');
+    const newCmtAvatar = newCmt.querySelector('img');
+    newCmtAvatar.src = comment.avatar;
+    newCmtAvatar.alt = comment.name;
 
-    tempImg.classList.add('social__picture');
-    tempImg.src = comment.avatar;
-    tempImg.alt = comment.name;
-    tempImg.width = cmtWidth;
-    tempImg.height = cmtHeight;
+    newCmt.querySelector('p').textContent = comment.message;
 
-    tempP.classList.add('social__text');
-    tempP.textContent = comment.message;
-
-    fragment.append(tempLi);
-    fragment.querySelector('li').append(tempImg);
-    fragment.querySelector('li').append(tempP);
+    bigPicture.querySelector('.social__comments').append(newCmt);
 
     currCmtsCount++;
-
-    bigPicture.querySelector('.social__comments').append(fragment);
   });
   document.querySelector('.current-comments-count').textContent = currCmtsCount;
   if (currCmtsCount === allCmtsCount) {

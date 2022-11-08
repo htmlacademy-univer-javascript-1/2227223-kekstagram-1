@@ -1,17 +1,13 @@
 import {NAMES, DESCRIPTIONS, MESSAGES} from './data.js';
 
-function randomInteger(min, max) {
+const randomInteger = (min, max) => {
   const res = min + Math.random() * (max - min + 1);
   return Math.floor(res);
-}
+};
 
-function maxStringLength(str, maxLength) {
-  return str.length <= maxLength;
-}
+const maxStringLength = (str, maxLength) => str.length <= maxLength;
 
-function getNewID() {
-  return randomInteger(0, 10000000);
-}
+const getNewID = () => randomInteger(0, 10000000);
 
 const generateComments = (numberOfComments) => {
   const comments = [];

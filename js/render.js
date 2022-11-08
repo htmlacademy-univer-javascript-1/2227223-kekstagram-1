@@ -2,12 +2,12 @@ import {generatePosts} from './util.js';
 import {renderBigPicture} from './fullsizeMode.js';
 
 const template = document.querySelector('#picture').content;
-const newTemplate = template.querySelector('.picture');
+const picTemplate = template.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
 const renderPicture = ({url, likes, comments, description}) => {
-  const cloneOfPic = newTemplate.cloneNode(true);
+  const cloneOfPic = picTemplate.cloneNode(true);
   cloneOfPic.querySelector('img').src = url;
   cloneOfPic.querySelector('.picture__likes').textContent = likes;
   cloneOfPic.querySelector('.picture__comments').textContent = comments.length;
