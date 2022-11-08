@@ -28,35 +28,35 @@ const buttonClose = () => {
   });
 };
 
-const renderComment = ({avatar, message, name}) => {
-  const fragment = document.createDocumentFragment();
-  const tempLi = document.createElement('li');
-  const tempImg = document.createElement('img');
-  const tempP = document.createElement('p');
+const renderComments = (comments) => {
+  comments.forEach((comment) => {
+    const fragment = document.createDocumentFragment();
+    const tempLi = document.createElement('li');
+    const tempImg = document.createElement('img');
+    const tempP = document.createElement('p');
 
-  tempLi.classList.add('social__comment');
+    tempLi.classList.add('social__comment');
 
-  tempImg.classList.add('social__picture');
-  tempImg.src = avatar;
-  tempImg.alt = name;
-  tempImg.width = cmtWidth;
-  tempImg.height = cmtHeight;
+    tempImg.classList.add('social__picture');
+    tempImg.src = comment.avatar;
+    tempImg.alt = comment.name;
+    tempImg.width = cmtWidth;
+    tempImg.height = cmtHeight;
 
-  tempP.classList.add('social__text');
-  tempP.textContent = message;
+    tempP.classList.add('social__text');
+    tempP.textContent = comment.message;
 
-  fragment.append(tempLi);
-  fragment.querySelector('li').append(tempImg);
-  fragment.querySelector('li').append(tempP);
+    fragment.append(tempLi);
+    fragment.querySelector('li').append(tempImg);
+    fragment.querySelector('li').append(tempP);
 
-  bigPicture.querySelector('.social__comments').append(fragment);
+    bigPicture.querySelector('.social__comments').append(fragment);
+  });
 };
 
-const renderComments = (comments) => {
+const createComments = (comments) => {
   deleteOldCmts();
-  comments.forEach((comment) => {
-    renderComment(comment);
-  });
+  renderComments(comments);
 };
 
 const renderBigPicture = ({url, likes, comments, description}) => {
@@ -65,7 +65,7 @@ const renderBigPicture = ({url, likes, comments, description}) => {
   document.querySelector('.comments-count').textContent = comments.length;
   document.querySelector('.social__caption').textContent = description;
 
-  renderComments(comments);
+  createComments(comments);
 
   bigPicture.classList.remove('hidden');
   socCmtCount.classList.add('hidden');
