@@ -1,6 +1,9 @@
+import { scaleValue } from './scale.js';
+
 const body = document.querySelector('body');
 const initialImgUpload = document.querySelector('.img-upload__start');
 const editImg = document.querySelector('.img-upload__overlay');
+const imgPreview = editImg.querySelector('.img-upload__preview');
 const uploadFile = document.querySelector('#upload-file');
 const imgDescr = document.querySelector('.text__description');
 const hashtags = document.querySelector('.text__hashtags');
@@ -31,6 +34,9 @@ const buttonClose = () => {
 initialImgUpload.onchange = () => {
   editImg.classList.remove('hidden');
   body.classList.add('modal-open');
+
+  scaleValue.value = '100%';
+  imgPreview.style = `transform: scale(${scaleValue})`;
 
   buttonClose();
 };
