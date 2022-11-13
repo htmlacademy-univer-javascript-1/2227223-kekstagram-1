@@ -1,5 +1,5 @@
 import { scaleValue } from './scale.js';
-import { onUploadOverlayEffectChange } from './effects.js';
+import { onUploadOverlayEffectChange, removeFilter } from './effects.js';
 
 const body = document.querySelector('body');
 const initialImgUpload = document.querySelector('.img-upload__start');
@@ -16,6 +16,7 @@ const closeOption = () => {
   editImg.classList.add('hidden');
 
   form.removeEventListener('change', onUploadOverlayEffectChange);
+  removeFilter();
 
   uploadFile.value = '';
   imgDescr.value = '';

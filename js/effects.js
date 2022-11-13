@@ -12,21 +12,30 @@ const effects = {
 
 noUiSlider.create(slider, effects['chrome'].options);
 
-let previousEffectClass = 'effects__preview--none';
+let prevEffectClass = 'effects__preview--none';
 
-function changePreviewEffectClass(newEffectName) {
-  const newEffectClass = `effects__preview--${newEffectName}`;
+const removeFilter = () => {
+  imgPreview.classList.remove(prevEffectClass);
+  imgPreview.classList.add('effects__preview--none');
+  imgPreview.style.filter = 'none';
+  slider.classList.toggle('hidden');
 
-  imgPreview.classList.remove(previousEffectClass);
+  prevEffectClass = 'effects__preview--none';
+};
+
+function changeEffect(newEffect) {
+  const newEffectClass = `effects__preview--${newEffect}`;
+
+  imgPreview.classList.remove(prevEffectClass);
   imgPreview.classList.add(newEffectClass);
 
-  previousEffectClass = newEffectClass;
+  prevEffectClass = newEffectClass;
 }
 
 const onUploadOverlayEffectChange = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     const newEffectName = evt.target.value;
-    changePreviewEffectClass(newEffectName);
+    changeEffect(newEffectName);
 
     if (newEffectName !== 'none') {
       if (slider.classList.contains('hidden')) {
@@ -47,4 +56,4 @@ const onUploadOverlayEffectChange = (evt) => {
   }
 };
 
-export{onUploadOverlayEffectChange};
+export{onUploadOverlayEffectChange, removeFilter};
