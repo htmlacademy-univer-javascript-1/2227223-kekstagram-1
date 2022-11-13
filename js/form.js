@@ -1,13 +1,23 @@
+import { scaleValue } from './scale.js';
+import { onUploadOverlayEffectChange, removeFilter } from './effects.js';
+
 const body = document.querySelector('body');
 const initialImgUpload = document.querySelector('.img-upload__start');
-const editImg = document.querySelector('.img-upload__overlay');
-const uploadFile = document.querySelector('#upload-file');
-const imgDescr = document.querySelector('.text__description');
-const hashtags = document.querySelector('.text__hashtags');
+const form = document.querySelector('.img-upload__form');
+const editImg = form.querySelector('.img-upload__overlay');
+const imgPreview = editImg.querySelector('.img-upload__preview');
+const uploadFile = form.querySelector('#upload-file');
+const imgDescr = form.querySelector('.text__description');
+const hashtags = form.querySelector('.text__hashtags');
+const slider = form.querySelector('.effect-level__slider');
 
 const closeOption = () => {
-  editImg.classList.add('hidden');
   body.classList.remove('modal-open');
+  editImg.classList.add('hidden');
+
+  form.removeEventListener('change', onUploadOverlayEffectChange);
+  removeFilter();
+
   uploadFile.value = '';
   imgDescr.value = '';
   hashtags.value = '';
@@ -30,7 +40,13 @@ const buttonClose = () => {
 
 initialImgUpload.onchange = () => {
   editImg.classList.remove('hidden');
+  slider.classList.add('hidden');
   body.classList.add('modal-open');
+
+  scaleValue.value = '100%';
+  imgPreview.style = `transform: scale(${scaleValue})`;
+
+  form.addEventListener('change', onUploadOverlayEffectChange);
 
   buttonClose();
 };
