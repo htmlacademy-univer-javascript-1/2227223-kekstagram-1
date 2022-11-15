@@ -1,6 +1,4 @@
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
-const SCALE_STEP = 25;
+import { MIN_SCALE, MAX_SCALE, SCALE_STEP } from './data.js';
 
 const imgPreview = document.querySelector('.img-upload__preview');
 const scaleField = document.querySelector('.img-upload__scale');

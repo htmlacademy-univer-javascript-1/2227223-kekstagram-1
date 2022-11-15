@@ -23,19 +23,19 @@ const removeFilter = () => {
   prevEffectClass = 'effects__preview--none';
 };
 
-function changeEffect(newEffect) {
+const changeEffectClass = (newEffect) => {
   const newEffectClass = `effects__preview--${newEffect}`;
 
   imgPreview.classList.remove(prevEffectClass);
   imgPreview.classList.add(newEffectClass);
 
   prevEffectClass = newEffectClass;
-}
+};
 
-const onUploadOverlayEffectChange = (evt) => {
+const changeEffect = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     const newEffectName = evt.target.value;
-    changeEffect(newEffectName);
+    changeEffectClass(newEffectName);
 
     if (newEffectName !== 'none') {
       if (slider.classList.contains('hidden')) {
@@ -56,4 +56,4 @@ const onUploadOverlayEffectChange = (evt) => {
   }
 };
 
-export{onUploadOverlayEffectChange, removeFilter};
+export{changeEffect, removeFilter};

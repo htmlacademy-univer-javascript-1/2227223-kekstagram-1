@@ -1,5 +1,5 @@
-import {generatePosts} from './util.js';
-import {renderBigPicture} from './fullsizeMode.js';
+import { renderBigPicture } from './fullsizeMode.js';
+import { getData } from './api.js';
 
 const template = document.querySelector('#picture').content;
 const picTemplate = template.querySelector('.picture');
@@ -20,10 +20,16 @@ const renderPicture = ({url, likes, comments, description}) => {
 };
 
 const renderPictures = (pics) => {
-  for (let i = 0; i < pics.length; i++) {
-    renderPicture(pics[i]);
-  }
+  pics.forEach((pic) => renderPicture(pic));
   pictures.appendChild(fragment);
 };
 
-renderPictures(generatePosts(25));
+const showError = (errorMessage) => {
+  const errorTemplate = document.querySelector('#error').content.querySelector('section');
+  const error = errorTemplate.cloneNode(true);
+
+  error.querySelector('h2').textContent = errorMessage;
+  document.querySelector('body').append(error);
+};
+
+getData(renderPictures, showError);

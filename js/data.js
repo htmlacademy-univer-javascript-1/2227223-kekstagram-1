@@ -23,4 +23,11 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-export {NAMES, DESCRIPTIONS, MESSAGES};
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+const SCALE_STEP = 25;
+
+const MAX_HASHTAGS_COUNT = 5;
+const MAX_COMMENT_LENGTH = 140;
+
+export {NAMES, DESCRIPTIONS, MESSAGES, MIN_SCALE, MAX_SCALE, SCALE_STEP, MAX_HASHTAGS_COUNT, MAX_COMMENT_LENGTH};
