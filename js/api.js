@@ -14,27 +14,23 @@ const getData = (onSuccess, onError) => {
     });
 };
 
-const sendData = (onSuccess, onError, body, unblockSubmitButton) => {
-  fetch('https://26.javascript.pages.academy/kekstagram',
+const sendData = (onSuccess, onFail, body) => {
+  fetch(
+    'https://26.javascript.pages.academy/kekstagram',
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: body
-    })
+      body,
+    },
+  )
     .then((response) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onError('Не удалось загрузить пост. Попробуйте ещё раз');
+        onFail('Не удалось загрузить пост. Попробуйте ещё раз');
       }
     })
     .catch(() => {
-      onError('Не удалось загрузить пост. Попробуйте ещё раз');
-    })
-    .finally(() => {
-      unblockSubmitButton();
+      onFail('Не удалось загрузить пост. Попробуйте ещё раз');
     });
 };
 
