@@ -3,14 +3,14 @@ const imgPreview = form.querySelector('.img-upload__preview');
 const slider = form.querySelector('.effect-level__slider');
 const effectLevel = form.querySelector('.effect-level__value');
 const effects = {
-  'chrome': { filter: 'grayscale( )', options: { range: { min: 0, max: 1, }, start: 0, step: 0.1, connect: 'lower' } },
-  'sepia': { filter: 'sepia( )', options: { range: { min: 0, max: 1, }, start: 0, step: 0.1, connect: 'lower' } },
-  'marvin': { filter: 'invert( %)', options: { range: { min: 0, max: 100, }, start: 0, step: 1, connect: 'lower' } },
-  'phobos': { filter: 'blur( px)', options: { range: { min: 0, max: 3, }, start: 0, step: 0.1, connect: 'lower' } },
-  'heat': { filter: 'brightness( )', options: { range: { min: 1, max: 3, }, start: 1, step: 0.1, connect: 'lower' } },
+  'chrome': { filter: 'grayscale( )', options: { min: 0, max: 1, start: 0, step: 0.1 } },
+  'sepia': { filter: 'sepia( )', options: { min: 0, max: 1, start: 0, step: 0.1 } },
+  'marvin': { filter: 'invert( %)', options: { min: 0, max: 100, start: 0, step: 1 } },
+  'phobos': { filter: 'blur( px)', options: { min: 0, max: 3, start: 0, step: 0.1 } },
+  'heat': { filter: 'brightness( )', options: { min: 1, max: 3, start: 1, step: 0.1 } },
 };
 
-noUiSlider.create(slider, effects['chrome'].options);
+noUiSlider.create(slider, { range: { min: 0, max: 0, }, start: 0});
 
 let prevEffectClass = 'effects__preview--none';
 
@@ -23,25 +23,33 @@ const removeFilter = () => {
   prevEffectClass = 'effects__preview--none';
 };
 
-function changeEffect(newEffect) {
+const changeEffectClass = (newEffect) => {
   const newEffectClass = `effects__preview--${newEffect}`;
 
   imgPreview.classList.remove(prevEffectClass);
   imgPreview.classList.add(newEffectClass);
 
   prevEffectClass = newEffectClass;
-}
+};
 
-const onUploadOverlayEffectChange = (evt) => {
+const changeEffect = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     const newEffectName = evt.target.value;
-    changeEffect(newEffectName);
+    changeEffectClass(newEffectName);
 
     if (newEffectName !== 'none') {
       if (slider.classList.contains('hidden')) {
         slider.classList.remove('hidden');
       }
-      slider.noUiSlider.updateOptions(effects[newEffectName].options);
+      const newEffectOptions = effects[newEffectName].options;
+      slider.noUiSlider.updateOptions({
+        range: {
+          min: newEffectOptions.min,
+          max: newEffectOptions.max
+        },
+        start: newEffectOptions.start,
+        step: newEffectOptions.step
+      });
 
       slider.noUiSlider.on('update', () => {
         effectLevel.value = slider.noUiSlider.get();
@@ -56,4 +64,4 @@ const onUploadOverlayEffectChange = (evt) => {
   }
 };
 
-export{onUploadOverlayEffectChange, removeFilter};
+export{changeEffect, removeFilter};

@@ -44,4 +44,4 @@ const generatePosts = (numberOfPosts) => {
   return posts;
 };
 
-export {randomInteger, maxStringLength, getNewID, generateComments, generatePosts};
+export {randomInteger, maxStringLength, getNewID, generatePosts};

@@ -1,5 +1,4 @@
-const MAX_HASHTAGS_COUNT = 5;
-const MAX_COMMENT_LENGTH = 140;
+import { MAX_HASHTAGS_COUNT, MAX_COMMENT_LENGTH } from './data.js';
 
 const form = document.querySelector('.img-upload__form');
 const inputHashtag = document.querySelector('.text__hashtags');
@@ -49,9 +48,6 @@ pristine.addValidator(imgDescr, commentHandler, 'Длина комментари
 inputHashtag.onkeydown = onFocusIgnoreEsc;
 imgDescr.onkeydown = onFocusIgnoreEsc;
 
-form.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
-  }
-});
+const isFormValid = () => pristine.validate();
+
+export {isFormValid};

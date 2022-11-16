@@ -83,10 +83,8 @@ const renderBigPicture = ({url, likes, comments, description}) => {
 };
 
 function deleteOldCmts() {
-  const arrOfCom = document.querySelectorAll('.social__comment');
-  for (let i = 0; i < arrOfCom.length; i++) {
-    document.querySelector('.social__comment').remove();
-  }
+  const oldCmts = document.querySelectorAll('.social__comment');
+  oldCmts.forEach((cmt) => cmt.remove());
 }
 
 export {renderBigPicture};
