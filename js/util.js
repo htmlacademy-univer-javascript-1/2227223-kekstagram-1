@@ -44,4 +44,23 @@ const generatePosts = (numberOfPosts) => {
   return posts;
 };
 
-export {randomInteger, maxStringLength, getNewID, generatePosts};
+const getRandomElements = (array, count) => {
+  const res = [];
+  for (let i = 0; i < count; i++) {
+    const randElement = array[randomInteger(0, array.length - 1)];
+    res.push(randElement);
+    array.splice(array.indexOf(randElement), 1);
+  }
+  return res;
+};
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {randomInteger, maxStringLength, getNewID, generatePosts, debounce, getRandomElements};
