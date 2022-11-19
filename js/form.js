@@ -25,19 +25,19 @@ const closeOption = () => {
   uploadFile.value = '';
   imgDescr.value = '';
   hashtags.value = '';
-
-  document.removeEventListener('keydown', escClose);
 };
 
-function escClose(keyEvent) {
+const escClose = (keyEvent) => {
   if (keyEvent.keyCode === 27) {
     closeOption();
+    document.removeEventListener('keydown', escClose);
   }
-}
+};
 
 const buttonClose = () => {
   editImg.querySelector('.img-upload__cancel').addEventListener('click', () => {
     closeOption();
+    document.removeEventListener('keydown', escClose);
   });
 };
 
@@ -89,14 +89,6 @@ const createMessage = (isSuccess) => {
   document.addEventListener('keydown', (evt) => messageEscClose(evt, message, abortController), { signal: abortController.signal });
 };
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-};
-
 const successSending = () => {
   closeOption();
   createMessage(true);
@@ -104,14 +96,14 @@ const successSending = () => {
 
 const failSending = () => {
   document.removeEventListener('keydown', escClose);
-  unblockSubmitButton();
+  submitButton.disabled = false;
   createMessage(false);
 };
 
 function submitForm(evt) {
   evt.preventDefault();
   if (isFormValid()) {
-    blockSubmitButton();
+    submitButton.disabled = true;
     sendData(successSending, failSending, new FormData(evt.target));
   }
 }
