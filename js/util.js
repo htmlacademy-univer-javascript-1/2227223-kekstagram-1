@@ -54,13 +54,13 @@ const getRandomElements = (array, count) => {
   return res;
 };
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
 
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 export {randomInteger, maxStringLength, getNewID, generatePosts, debounce, getRandomElements};

@@ -29,6 +29,11 @@ const renderPicture = ({url, likes, comments, description}) => {
   currPics.push(newPic);
 };
 
+const removePhotos = () => {
+  currPics.forEach((pic) => pictures.removeChild(pic));
+  currPics = [];
+};
+
 const renderPictures = () => {
   removePhotos();
   newPics.forEach((pic) => renderPicture(pic));
@@ -80,11 +85,6 @@ const firstRenderPictures = (photos) => {
   renderPictures();
   changeFilter(photos, debounce(() => renderPictures(), 500));
 };
-
-function removePhotos() {
-  currPics.forEach((pic) => pictures.removeChild(pic));
-  currPics = [];
-}
 
 const showError = (errorMessage) => {
   const errorTemplate = document.querySelector('#error').content.querySelector('section');
