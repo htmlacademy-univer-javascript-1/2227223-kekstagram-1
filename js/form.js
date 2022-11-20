@@ -38,7 +38,7 @@ const buttonClose = () => {
   editImg.querySelector('.img-upload__cancel').addEventListener('click', () => {
     closeOption();
     document.removeEventListener('keydown', escClose);
-  });
+  }, { once: true });
 };
 
 initialImgUpload.onchange = () => {
