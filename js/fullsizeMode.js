@@ -26,7 +26,7 @@ const buttonClose = () => {
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', () => {
     closeOption();
     document.removeEventListener('keydown', escClose);
-  });
+  }, { once: true });
 };
 
 const renderComments = (comments) => {
@@ -58,6 +58,11 @@ const loadFiveCmts = (evt) => {
   renderFiveCmts();
 };
 
+const deleteOldCmts = () => {
+  const oldCmts = document.querySelectorAll('.social__comment');
+  oldCmts.forEach((cmt) => cmt.remove());
+};
+
 const createComments = () => {
   deleteOldCmts();
 
@@ -81,10 +86,5 @@ const renderBigPicture = ({url, likes, comments, description}) => {
 
   buttonClose();
 };
-
-function deleteOldCmts() {
-  const oldCmts = document.querySelectorAll('.social__comment');
-  oldCmts.forEach((cmt) => cmt.remove());
-}
 
 export {renderBigPicture};

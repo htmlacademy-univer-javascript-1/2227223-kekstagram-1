@@ -25,20 +25,20 @@ const closeOption = () => {
   uploadFile.value = '';
   imgDescr.value = '';
   hashtags.value = '';
-
-  document.removeEventListener('keydown', escClose);
 };
 
-function escClose(keyEvent) {
+const escClose = (keyEvent) => {
   if (keyEvent.keyCode === 27) {
     closeOption();
+    document.removeEventListener('keydown', escClose);
   }
-}
+};
 
 const buttonClose = () => {
   editImg.querySelector('.img-upload__cancel').addEventListener('click', () => {
     closeOption();
-  });
+    document.removeEventListener('keydown', escClose);
+  }, { once: true });
 };
 
 initialImgUpload.onchange = () => {
@@ -56,22 +56,23 @@ initialImgUpload.onchange = () => {
   buttonClose();
 };
 
-const removeMessage = (messageBlock, abortController) => {
-  abortController.abort();
+const removeMessage = (messageBlock) => {
   body.removeChild(messageBlock);
 };
 
-const messageEscClose = (evt, messageBlock, abortController) => {
+const messageEscClose = (evt, messageBlock, ) => {
   if (evt.keyCode === 27) {
-    removeMessage(messageBlock, abortController);
+    document.removeEventListener('keydown', messageEscClose);
+    removeMessage(messageBlock);
     document.addEventListener('keydown', escClose);
   }
 };
 
-const messageClickOutsideClose = (evt, messageBlock, isSuccess, abortController) => {
+const messageClickOutsideClose = (evt, messageBlock, isSuccess, ) => {
   const selector = `.${isSuccess ? 'success' : 'error'}__inner`;
   if (!evt.target.closest(selector)) {
-    removeMessage(messageBlock, abortController);
+    document.removeEventListener('keydown', messageEscClose);
+    removeMessage(messageBlock);
   }
 };
 
@@ -79,39 +80,31 @@ const createMessage = (isSuccess) => {
   const messageTemplate = document.querySelector(`#${isSuccess ? 'success' : 'error'}`).content.querySelector('section');
   const message = messageTemplate.cloneNode(true);
   const button = message.querySelector('button');
-  const abortController = new AbortController();
 
   body.appendChild(message);
 
-  button.onclick = () => removeMessage(message, abortController);
-  message.onclick = (evt) => messageClickOutsideClose(evt, message, isSuccess, abortController);
+  button.onclick = () => removeMessage(message);
+  message.onclick = (evt) => messageClickOutsideClose(evt, message, isSuccess);
 
-  document.addEventListener('keydown', (evt) => messageEscClose(evt, message, abortController), { signal: abortController.signal });
-};
-
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
+  document.addEventListener('keydown', (evt) => messageEscClose(evt, message));
 };
 
 const successSending = () => {
+  document.removeEventListener('keydown', escClose);
   closeOption();
   createMessage(true);
 };
 
 const failSending = () => {
   document.removeEventListener('keydown', escClose);
-  unblockSubmitButton();
+  submitButton.disabled = false;
   createMessage(false);
 };
 
 function submitForm(evt) {
   evt.preventDefault();
   if (isFormValid()) {
-    blockSubmitButton();
+    submitButton.disabled = true;
     sendData(successSending, failSending, new FormData(evt.target));
   }
 }
