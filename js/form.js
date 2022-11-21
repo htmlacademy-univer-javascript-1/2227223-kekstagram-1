@@ -90,6 +90,7 @@ const createMessage = (isSuccess) => {
 };
 
 const successSending = () => {
+  document.removeEventListener('keydown', escClose);
   closeOption();
   createMessage(true);
 };

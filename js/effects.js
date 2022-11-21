@@ -10,7 +10,7 @@ const effects = {
   'heat': { filter: 'brightness( )', options: { min: 1, max: 3, start: 1, step: 0.1 } },
 };
 
-noUiSlider.create(slider, { range: { min: 0, max: 0, }, start: 0});
+noUiSlider.create(slider, { range: { min: 0, max: 0 }, start: 0});
 
 let prevEffectClass = 'effects__preview--none';
 
